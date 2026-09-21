@@ -1,0 +1,6 @@
+shuffle-sdk==0.0.40
+requests==2.32.3
+matrix-nio[e2e]
+pynacl~=1.5
+cryptography>=41.0
+base58~=2.1
