@@ -1,0 +1,68 @@
+app_version: 1.0.0
+name: Matrix Crypto
+description: Matrix E2EE crypto operations using matrix-nio
+contact_info:
+  name: "@matrix-crypto"
+  url: https://github.com/shuffle
+authentication:
+  required: true
+  parameters:
+    - name: username
+      description: Matrix username (e.g. @bot:matrix.example.com or local part)
+      required: true
+      schema:
+        type: string
+    - name: password
+      description: Matrix account password
+      required: true
+      schema:
+        type: string
+    - name: recovery_key
+      description: SSSS recovery key used to unlock the self-signing key for cross-signing
+      required: true
+      schema:
+        type: string
+actions:
+  - name: send_encrypted_message
+    description: Log in (or reuse a saved session), cross-sign the device, join the room if needed, and send an E2EE message
+    parameters:
+      - name: homeserver
+        description: "Matrix homeserver URL, e.g. matrix.example.com"
+        required: true
+        schema:
+          type: string
+      - name: room
+        description: "Room ID or matrix.to link, e.g. !abc123:example.com"
+        required: true
+        schema:
+          type: string
+      - name: message
+        description: Message body to send
+        required: true
+        multiline: true
+        schema:
+          type: string
+
+  - name: execute_python
+    description: >
+      Runs arbitrary Python with matrix_client helpers, nio, and the auth
+      profile's username/password/recovery_key already available as globals.
+      Use print(...) to emit output; it becomes the action result.
+    parameters:
+      - name: code
+        description: The code to run
+        required: true
+        multiline: true
+        example: 'print("hello world")'
+        schema:
+          type: string
+      - name: homeserver
+        description: "Matrix homeserver URL, e.g. matrix.example.com"
+        required: false
+        schema:
+          type: string
+      - name: room
+        description: "Room ID or matrix.to link"
+        required: false
+        schema:
+          type: string
